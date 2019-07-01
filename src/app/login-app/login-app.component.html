@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="d-flex justify-content-center background">
+    <div class="card">
+      <div class="card-header">
+        <h3>Logowanie</h3>
+        <div class="d-flex justify-content-end social_icon">
+          <span><i class="fa fa-facebook-square"></i></span>
+          <span><i class="fa fa-google-plus-square"></i></span>
+          <span><i class="fa fa-twitter-square"></i></span>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="LoginForm" (ngSubmit)="onSubmit()">
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-camera"></i></span>
+            </div>
+            <input
+              formControlName="email"
+              type="text"
+              class="form-control"
+              placeholder="Email"
+              required
+              email
+            />
+
+
+            <!-- <div
+              *ngIf="login.invalid && (login.dirty || login.touched)"
+              class="alert alert-danger"
+            >
+              <div *ngIf="login.errors.required">
+                Name is required.
+              </div>
+              <div *ngIf="login.errors.minlength">
+                Name must be at least 4 characters long.
+              </div>
+              <div *ngIf="login.errors.forbiddenName">
+                Name cannot be Bob.
+              </div>
+            </div> -->
+          </div>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-key"></i></span>
+            </div>
+            <input
+              formControlName="password"
+              type="password"
+              class="form-control"
+              placeholder="Hasło"
+            />
+          </div>
+          <div *ngIf="authService.errorMessage"  class="alert alert-danger">{{authService.errorMessage}}</div>
+          <div class="row align-items-center remember">
+            <input type="checkbox" />Zapamiętaj mnie
+          </div>
+          <div class="form-group">
+            <button
+            type="submit"
+              [disabled]="!LoginForm.valid"
+              class="btn float-right login_btn"
+              *ngIf="!isLoginMode"
+            >
+            Zarejestruj
+            </button>
+            <button
+            type="submit"
+              [disabled]="!LoginForm.valid"
+              class="btn float-right login_btn"
+              *ngIf="isLoginMode"
+            >
+            Zaloguj
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-center links">
+          {{ isLoginMode ? 'Nie masz konta?' : 'Masz konto?' }}<button (click)="onSwitchMode()" >{{ isLoginMode ? 'Zarejestruj' : 'Zaloguj' }}</button>
+        </div>
+        <div class="d-flex justify-content-center">
+          <a href="#">Zapomniałes hasła?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
