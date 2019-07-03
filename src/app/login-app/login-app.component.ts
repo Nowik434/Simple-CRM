@@ -1,9 +1,9 @@
-import { User } from './../services/user';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { AuthService } from '../services/auth.service';
+import { User } from './../services/user';
 
 @Component({
   selector: 'app-login-app',
@@ -14,6 +14,7 @@ export class LoginAppComponent implements OnInit {
 
   user: User;
   isLoginMode = true;
+  errorMessage: string;
 
   constructor(private authService: AuthService, public afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe(user => {
@@ -50,7 +51,28 @@ export class LoginAppComponent implements OnInit {
       this.LoginForm.reset();
     } else {
       console.log('Register Mode');
-      this.authService.SignUp(this.LoginForm.value.email, this.LoginForm.value.password)
+      this.authService.SignUp(this.LoginForm.value.email, this.LoginForm.value.password).subscribe(
+        UserData => {
+          console.log(UserData);
+        },
+        error => {
+          console.log(error.error.error.message);
+          switch(error.error.error.message) {
+            case 'INVALID_EMAIL':
+              this.errorMessage = 'Nieprawidłowy adres email';
+              break;
+            case 'EMAIL_EXISTS':
+              this.errorMessage = 'Podany adres już istnieje';
+              break;
+            case 'OPERATION_NOT_ALLOWED':
+              this.errorMessage = 'fdsfdsfds';
+              break;
+            case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+              this.errorMessage = 'Sprobuj pozniej';
+              break;
+          }
+        }
+      )
       this.LoginForm.reset();
     }
   }

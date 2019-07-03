@@ -52,6 +52,7 @@
             />
           </div>
           <div *ngIf="authService.errorMessage"  class="alert alert-danger">{{authService.errorMessage}}</div>
+          <div *ngIf="errorMessage"  class="alert alert-danger">{{errorMessage}}</div>
           <div class="row align-items-center remember">
             <input type="checkbox" />Zapamiętaj mnie
           </div>
@@ -80,7 +81,7 @@
           {{ isLoginMode ? 'Nie masz konta?' : 'Masz konto?' }}<button (click)="onSwitchMode()" >{{ isLoginMode ? 'Zarejestruj' : 'Zaloguj' }}</button>
         </div>
         <div class="d-flex justify-content-center">
-          <a href="#">Zapomniałes hasła?</a>
+          <a routerLink="/reset">Zapomniałes hasła?</a>
         </div>
       </div>
     </div>

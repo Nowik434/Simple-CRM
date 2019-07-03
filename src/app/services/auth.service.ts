@@ -2,7 +2,7 @@ import { User } from './user';
 import { Injectable, NgZone  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from  "@angular/router";
+import { Router } from  '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 
@@ -18,7 +18,8 @@ export class AuthService {
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth ,
     public  router:  Router,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    public http: HttpClient
   ) { }
 
 // showError() {
@@ -51,17 +52,27 @@ SignIn(email, password) {
       });
   }
 
-SignUp(email, password) {
-  return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-  .catch((error) => {
-    // Handle Errors here.
-    console.log(error);
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ...
-  });
-}
+// SignUp(email, password) {
+//   return this.afAuth.auth.createUserWithEmailAndPassword(email, password).then(
+//   )
+//   .catch((error) => {
+//     // Handle Errors here.
+//     console.log(error);
+//     var errorCode = error.code;
+//     var errorMessage = error.message;
+//     // ...
+//   });
+// }
 
+
+  SignUp(email, password) {
+    return this.http.post<User>('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCyKphftMCyMzRtKSVjor1a0EI8Mmy4gWE',
+      {
+        'email': email,
+        'password': password,
+        'returnSecureToken': true
+      })
+  }
 
 
 

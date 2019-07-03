@@ -15,11 +15,13 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginAppComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'reset', component: ResetPasswordComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'
@@ -32,7 +34,8 @@ const appRoutes: Routes = [
     AppComponent,
     LoginAppComponent,
     PageNotFoundComponent,
-    DashboardComponent
+    DashboardComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
