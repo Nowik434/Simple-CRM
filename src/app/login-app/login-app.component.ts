@@ -47,32 +47,38 @@ export class LoginAppComponent implements OnInit {
   onSubmit() {
     if(this.isLoginMode) {
       console.log('Login Mode');
-      this.authService.SignIn(this.LoginForm.value.email, this.LoginForm.value.password)
+      this.authService.login(this.LoginForm.value.email, this.LoginForm.value.password).catch(error => {
+        console.log(error)
+        let errorCode = error.code;
+        switch(errorCode) {
+          case 'auth/user-not-found':
+            this.errorMessage = 'Nie znaleziono użytkownika';
+            break;
+          case 'auth/wrong-password':
+            this.errorMessage = 'Nieprawidłowe hasło';
+            break;
+        }
+        console.log(errorCode);
+      });
       this.LoginForm.reset();
     } else {
       console.log('Register Mode');
-      this.authService.SignUp(this.LoginForm.value.email, this.LoginForm.value.password).subscribe(
-        UserData => {
-          console.log(UserData);
-        },
-        error => {
-          console.log(error.error.error.message);
-          switch(error.error.error.message) {
-            case 'INVALID_EMAIL':
-              this.errorMessage = 'Nieprawidłowy adres email';
-              break;
-            case 'EMAIL_EXISTS':
-              this.errorMessage = 'Podany adres już istnieje';
-              break;
-            case 'OPERATION_NOT_ALLOWED':
-              this.errorMessage = 'fdsfdsfds';
-              break;
-            case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-              this.errorMessage = 'Sprobuj pozniej';
-              break;
-          }
+      this.authService.signUp(this.LoginForm.value.email, this.LoginForm.value.password).catch(error => {
+        console.log(error);
+        let errorCode = error.code;
+        switch(errorCode) {
+          case 'auth/user-not-found':
+            this.errorMessage = 'Nie znaleziono użytkownika';
+            break;
+          case 'auth/wrong-password':
+            this.errorMessage = 'Nieprawidłowe hasło';
+            break;
+          case 'auth/email-already-in-use':
+            this.errorMessage = 'Użytkownik już istnieje';
+            break;
         }
-      )
+        console.log(errorCode);
+      });
       this.LoginForm.reset();
     }
   }

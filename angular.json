@@ -136,5 +136,10 @@
       }
     }
   },
-  "defaultProject": "login-app"
+  "defaultProject": "login-app",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "sass"
+    }
+  }
 }

@@ -1,0 +1,18 @@
+<!-- <ul>
+  <li *ngFor="let user of activeUsers | async">
+    <a *ngIf="user.status == true">{{ user.email }}</a>
+  </li>
+</ul> -->
+
+<!-- <div *ngFor="let item of users" class="tag is-large"
+>
+{{item.email}}
+{{item.status}}
+</div> -->
+
+
+<div class="userList">
+  <app-user-item
+  [user]=user *ngFor="let user of users">
+  </app-user-item>
+</div>

@@ -1,0 +1,11 @@
+<div class="userItem row">
+  <img class="col-md-3 avatar" src="{{ user.photoUrl }}" alt="avatar" />
+  <div class="about col-md-9">
+    <div class="userName">
+      {{user.email}}
+    </div>
+    <div class="status">
+      <i class="fa fa-circle" [ngClass]=(user.status)>  {{ user.status }}</i>
+    </div>
+  </div>
+</div>
